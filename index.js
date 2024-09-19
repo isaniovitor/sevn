@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentRound = 1;
   let roundsData = [];
 
+  const prevButton = document.getElementById('prevRound');
+  const nextButton = document.getElementById('nextRound');
+  const roundNumberElem = document.getElementById('roundNumber');
   const gamesContainer = document.getElementById('gamesContainer');
 
   function loadRoundsData() {
@@ -59,6 +62,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
       gamesContainer.innerHTML = gamesHTML;
   }
+
+  function updateRoundNumber(round) {
+    roundNumberElem.textContent = `RODADA  ${round}`;
+  }
+
+  function updateNavigationButtons() {
+      prevButton.disabled = currentRound <= 1;
+      nextButton.disabled = currentRound >= roundsData.length;
+  }
+
+  prevButton.addEventListener('click', () => {
+      if (currentRound > 1) {
+          currentRound -= 1;
+          displayRound(currentRound);
+          updateRoundNumber(currentRound);
+          updateNavigationButtons();
+      }
+  });
+
+  nextButton.addEventListener('click', () => {
+      if (currentRound < roundsData.length) {
+          currentRound += 1;
+          displayRound(currentRound);
+          updateRoundNumber(currentRound);
+          updateNavigationButtons();
+      }
+  });
 
   loadRoundsData();
 });
